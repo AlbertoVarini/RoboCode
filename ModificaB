@@ -1,0 +1,80 @@
+package RoboA;
+import java.awt.Color;
+import robocode.BulletHitBulletEvent;
+import robocode.BulletHitEvent;
+import robocode.HitByBulletEvent;
+import robocode.HitRobotEvent;
+import robocode.HitWallEvent;
+import robocode.Robot;
+import robocode.ScannedRobotEvent;
+
+public class YouRobot extends Robot
+{
+	public int x,y;
+	public double energy;
+	public boolean moviment=true;
+	public double GunVelocity;
+	public void run()
+	{
+		setColors(Color.BLACK, Color.BLACK, Color.RED);
+		while(true)
+		{
+			if(moviment)
+			{
+				ahead(300);
+				turnLeft(300);
+				back(200);
+				
+			}
+		}
+}
+	public void onScannedRobot(ScannedRobotEvent event)
+	{
+		
+		if(getEnergy()>30)
+		{
+			fire(3);
+			if(getGunHeat()==0)
+			{
+				fire(2);
+			}
+		}
+		if(getEnergy()>16)
+		{
+			fire(2);
+			
+		}
+		if(getEnergy()<16 )
+		{
+			fire(1);
+			
+		}
+	}
+	public void onBulletHit(BulletHitEvent event)
+	{
+		scan();
+	}
+	public void onHitByBullet(HitByBulletEvent e)
+	{
+		scan();
+		}
+	public void onBulletHitBullet(BulletHitBulletEvent event)
+	{
+		scan();
+	}
+	public void onHitRobot(HitRobotEvent event)
+	{
+		if (event.getBearing() > -30 && event.getBearing() < 30) {
+			fire(2);
+		}
+	}
+	public void onHitWall(HitWallEvent event)
+	{
+		turnRight(50);
+		turnLeft(50);
+		ahead(200);
+		turnRight(50);
+		turnLeft(50);
+		scan();
+	}
+}
